@@ -33,12 +33,13 @@ DOCUMENTATION = """
 
 EXAMPLES = """
 - name: show first existing file or ignore if none do
-  debug: msg={{lookup('first_found', findme, errors='ignore')}}
+  debug:
+    msg: "{{lookup('first_found', findme, errors='ignore')}}"
   vars:
     findme:
-      - "/path/to/foo.txt"
-      - "bar.txt"  # will be looked in files/ dir relative to role and/or play
-      - "/path/to/biz.txt"
+      - /path/to/foo.txt
+      - bar.txt  # will be looked in files/ dir relative to role and/or play
+      - /path/to/biz.txt
 
 - name: |
         include tasks only if files exist.  Note the use of query() to return
@@ -55,21 +56,26 @@ EXAMPLES = """
         copy first existing file found to /some/file,
         looking in relative directories from where the task is defined and
         including any play objects that contain it
-  copy: src={{lookup('first_found', findme)}} dest=/some/file
+  copy:
+    src: "{{lookup('first_found', findme)}}"
+    dest: /some/file
   vars:
     findme:
       - foo
-      - "{{inventory_hostname}}"
+      - '{{inventory_hostname}}'
       - bar
 
 - name: same copy but specific paths
-  copy: src={{lookup('first_found', params)}} dest=/some/file
+  copy:
+    src: "{{lookup('first_found', params)}}"
+    dest: /some/file
   vars:
     params:
       files:
         - foo
-        - "{{inventory_hostname}}"
+        - '{{inventory_hostname}}'
         - bar
+        skip: yes
       paths:
         - /tmp/production
         - /tmp/staging
