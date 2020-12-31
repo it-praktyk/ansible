@@ -75,7 +75,6 @@ EXAMPLES = """
         - foo
         - '{{inventory_hostname}}'
         - bar
-        skip: yes
       paths:
         - /tmp/production
         - /tmp/staging
